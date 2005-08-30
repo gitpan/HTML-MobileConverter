@@ -3,7 +3,7 @@ use strict;
 use HTML::Parser;
 use URI;
 
-our $VERSION = '0.01';
+our $VERSION = '0.011';
 
 sub new {
     my $class = shift;
@@ -238,11 +238,19 @@ HTML::MobileConverter - HTML Converter for mobile agent
 
   my $baseuri = 'http://example.com/';
   my $c = HTML::MobileConverter->new(baseuri => $baseuri);
-  my $html = qq|<html><body>title<hr><a href="./my">my link</a></body></html>|;
+  my $html =<<END;
+  <html><body>title<hr><a href="./my">my link</a></body></html>
+  END
   print $c->convert($html); # get html with abs-uri.
   
   use URI;
-  $html = qq|<html><body>title<hr><a href="./my">my link</a><iframe src="./my"></iframe></body></html>|;
+  $html = <<END;
+  <html><body>
+  title<hr>
+  <a href="./my">my link</a>
+  <iframe src="./my"></iframe>
+  </body></html>
+  END
   $c = HTML::MobileConverter->new(
     baseuri => $baseuri,
     hrefhandler => sub {
